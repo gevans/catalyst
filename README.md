@@ -1,5 +1,11 @@
 # Catalyst
 
+This is a small repository of patches and a build script for producing `.deb`
+packages for Ubuntu Precise 12.04 LTS. In particular, the produced fglrx
+packages have their dependencies adjusted to allow the
+[LTS enablement](https://wiki.ubuntu.com/Kernel/LTSEnablementStack) stack
+for Saucy.
+
 ## Installation
 
 Clone the repository:
