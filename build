@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+set -o errtrace
+set -o errexit
+
+shopt -s extglob
+
+set -x
+
+### Variables
+
+CATALYST_VERSION='14.2-betav1.3'
+DRIVER_VERSION='13.35.1005'
+CATALYST_SOURCE_URL="http://www2.ati.com/drivers/beta/amd-catalyst-${CATALYST_VERSION}-linux-x86.x86_64.zip"
+ROOT_DIR=$(readlink -f $(dirname $0))
+CATALYST_SOURCE_PATH="$ROOT_DIR/sources/$(basename $CATALYST_SOURCE_URL)"
+
+export DEBIAN_FRONTEND=noninteractive
+
+### Helpers
+
+exists()
+{
+  if which "$@" >/dev/null; then
+    true
+  else
+    false
+  fi
+}
+
+### Tasks
+
+sudo apt-get -y install build-essential curl unzip patch debhelper \
+  dh-modaliases libxrandr2 libice6 libsm6 libfontconfig1 libxi6 libxcursor1 \
+  libgl1-mesa-glx-lts-saucy libxinerama1 libqtgui4 execstack
+
+if [ ! -f "$CATALYST_SOURCE_PATH" ]; then
+  curl --referer http://support.amd.com/en-us/ -o $CATALYST_SOURCE_PATH $CATALYST_SOURCE_URL
+fi
+
+installer="$ROOT_DIR/tmp/amd-driver-installer-*-x86.x86_64.run"
+
+if [ ! -f $installer ]; then
+  unzip $CATALYST_SOURCE_PATH -d "$ROOT_DIR/tmp/"
+fi
+
+source_dir="$ROOT_DIR/tmp/source_files"
+
+if [ -d "$source_dir" ]; then
+  rm -rf $source_dir
+fi
+
+sh $installer --extract $source_dir
+
+cd $source_dir
+for f in $ROOT_DIR/patches/*.patch; do
+  patch -Np1 -i $f
+done
+
+sh $source_dir/ati-installer.sh $DRIVER_VERSION --buildpkg
+rm -f $ROOT_DIR/fglrx*.{changes,deb}
+mv $ROOT_DIR/tmp/fglrx*.{changes,deb} $ROOT_DIR/packages/
