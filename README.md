@@ -25,3 +25,11 @@ builds can be invoked with:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Credits
+
+Vi0L0 is awesome for having put together the original
+[catalyst](https://aur.archlinux.org/packages/catalyst/) package on the AUR. I
+don't use Arch Linux all the time, unfortunately, but greatly appreciated the
+patches and build script he's put together. The patches especially, which are
+used by this project.
