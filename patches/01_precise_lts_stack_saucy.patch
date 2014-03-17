@@ -2,11 +2,11 @@ diff -rupN original/packages/Ubuntu/dists/precise/control patched/packages/Ubunt
 --- original/packages/Ubuntu/dists/precise/control	2014-02-25 07:49:01.000000000 -0800
 +++ patched/packages/Ubuntu/dists/precise/control	2014-03-13 19:40:00.000000000 -0700
 @@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 7),
-                libxcursor1, 
-                fakeroot, 
+                libxcursor1,
+                fakeroot,
                 libdrm2,
 -               libgl1-mesa-glx | libgl1-mesa-glx-lts-quantal,
-+               libgl1-mesa-glx | libgl1-mesa-glx-lts-quantal | libgl1-mesa-glx-lts-saucy,
++               libgl1-mesa-glx-lts-saucy,
                 libxinerama1,
                 libqtgui4,
                 execstack
@@ -15,10 +15,10 @@ diff -rupN original/packages/Ubuntu/dists/precise/control patched/packages/Ubunt
  Architecture: amd64 i386
  Recommends: fglrx-amdcccle
 -Depends: ${shlibs:Depends}, xserver-xorg-core | xserver-xorg-core-lts-quantal,
-+Depends: ${shlibs:Depends}, xserver-xorg-core | xserver-xorg-core-lts-quantal | xserver-xorg-core-lts-saucy,
++Depends: ${shlibs:Depends}, xserver-xorg-core-lts-saucy,
   lib32gcc1 [amd64], libc6-i386 [amd64], dkms, make, linux-libc-dev,
 - linux-headers-generic | linux-headers-generic-lts-quantal | linux-headers
-+ linux-headers-generic | linux-headers-generic-lts-quantal | linux-headers-generic-lts-saucy | linux-headers
++ linux-headers-generic-lts-saucy | linux-headers-lts-saucy
  Conflicts: fglrx-driver, xfree86-driver-fglrx, xorg-driver-fglrx, fglrx-kernel-source, libamdxvba1, fglrx-modaliases
  Replaces: fglrx-driver, xfree86-driver-fglrx, xorg-driver-fglrx, fglrx-kernel-source, libamdxvba1, fglrx-modaliases, fglrx-updates
  Provides: fglrx-driver
